@@ -61,7 +61,6 @@ export const assignment = 'oskernel';   // assignment
 export const works = ['default', 'main']; // assignment 的不同情况 对应latest.json中的
 ```
 
-
 eg: fullOrganization 要进入 github classroom 后从url 获取
 #### 完整的 classroom 名称
 
