@@ -112,7 +112,7 @@ const ClassRoomRank = (props: IProps) => {
     const studentsList = props.students.map((item, index) => {
       let total = 0;
       for(let i in item.grades) {
-        total += item.grades[i];
+        total += toInteger(item.grades[i]);
       }
       item['total'] = total;
       return item;
