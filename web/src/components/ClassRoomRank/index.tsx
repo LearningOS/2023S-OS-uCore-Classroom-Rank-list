@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react'
 import { Table, Modal, Input } from 'antd'
 import dayjs from 'dayjs'
-import { orderBy } from 'lodash'
+import { orderBy, toInteger } from 'lodash'
 import './index.less'
 import Icon from '../Icon'
 import type { ColumnsType } from 'antd/lib/table'
