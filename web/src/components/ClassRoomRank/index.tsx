@@ -86,7 +86,7 @@ const ClassRoomRank = (props: IProps) => {
         return {
           title: item,
           dataIndex: `assignments-${item}`,
-          width: 200,
+          width: 130,
           align: 'center',
           key: '',
           render(_text: string, record: StudentInfo) {
@@ -98,6 +98,21 @@ const ClassRoomRank = (props: IProps) => {
           }
         }
       }) as ColumnsType<StudentInfo>),
+      {
+        title: '最后提交时间',
+        align: 'center',
+        dataIndex: 'lastUpdateAt',
+        fixed: false,
+        width: 200,
+        key: 'lastUpdateAt',
+        render(text: number | null | undefined, record: StudentInfo) {
+          if(text == null || text == undefined || text == 0) {
+            return '-';
+          }
+          return dayjs(text).locale("Asia/Beijing").format("YYYY/MM/DD HH:mm");
+          // return <AvatarInfo rank={record.rank} avatarURL={record.avatar} name={text} />
+        }
+      },
       {
         title: '',
         dataIndex: 'none',
@@ -117,7 +132,7 @@ const ClassRoomRank = (props: IProps) => {
       item['total'] = total;
       return item;
     });
-    let students = orderBy(studentsList, ['total'], 'desc');
+    let students = orderBy(studentsList, ['total', 'lastUpdateAt'], ['desc', 'asc']);
     for(let i = 0; i < students.length; i++) {
       students[i].rank = i + 1;
     }

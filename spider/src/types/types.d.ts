@@ -3,7 +3,8 @@ declare interface StudentInfo {
     name: string,
     avatar: string,
     repo_url: string,
-    grades: any
+    grades: any,
+    lastUpdateAt: number
 }
 
 // declare config of the file

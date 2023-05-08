@@ -141,6 +141,23 @@ async function getWorksGrade(reponame: string, latest: any) {
     return grade;
 }
 
+async function date2timestamp(latest: any) {
+    let time = 0;
+    try {
+        let latestFile = JSON.parse(decodeLogFile(latest));
+        for(let i in latestFile) {
+            let times = latestFile[i].replace(".txt", "").split('_');
+            const dateStr = `${times[0]}-${times[1]}-${times[2]} ${times[3]}:${times[4]}:${times[5]}`;
+            const date = new Date(dateStr);
+            if(time == 0 || date.getTime() < time) {
+                time = date.getTime();
+            }
+        }
+    } catch(e) {
+
+    }
+    return time;
+}
 
 async function getGrade() {
     let value = await fetchAssignments(fullOrganization, assignment, process.env['SESSION_TOKEN'] ?? "");
@@ -163,13 +180,16 @@ async function getGrade() {
         // Get the latest grade record file
         let latest = await getRepoLogFile(reponame, 'latest.json');
 
+        let lastUpdateAt = await date2timestamp(latest);
+        console.log(lastUpdateAt);
         // Store userinfo to json data
         let studentGrades = await getWorksGrade(reponame, latest);
         let student = {
             name: userInfo['data']['login'],
             avatar: userInfo['data']['avatar_url'],
             repo_url: repo['student_repository_url'],
-            grades: studentGrades
+            grades: studentGrades,
+            lastUpdateAt
         };
         addStudentInfo(student);
     }
