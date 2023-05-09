@@ -149,7 +149,7 @@ async function date2timestamp(latest: any) {
             let times = latestFile[i].replace(".txt", "").split('_');
             const dateStr = `${times[0]}-${times[1]}-${times[2]} ${times[3]}:${times[4]}:${times[5]}`;
             const date = new Date(dateStr);
-            if(time == 0 || date.getTime() < time) {
+            if(date.getTime() > time) {
                 time = date.getTime();
             }
         }
